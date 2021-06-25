@@ -4,6 +4,12 @@ The Met Office have produced a dataset of 'Adverse Weather Scenarios for Future
 Electricity Systems'. This lets us explore and anticipate the challenges energy
 systems may face under a warmer future climate.
 
+THis code was put together quickly during the Energy-Climate Hackathon 21-25
+June 2021. It is not guaranteed to work as expected, and filepaths will need to
+be altered to match data location on your system. Planned update in future to
+improve portability, readability, reliability of this work, and to expand on
+the analysis..
+
 ## Contents
 
 `energy_functions_22.py` - useful functions for converting weather variables
