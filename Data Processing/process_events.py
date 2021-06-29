@@ -17,6 +17,8 @@ from energy_functions_22 import calc_hdd_cdd, calc_demand, \
     alpha_demand_GB, convert_to_windpower, \
     country_wind_power, mask_xarray
 
+import data_paths
+
 
 # Setup logging
 logging.basicConfig(
@@ -29,11 +31,9 @@ logging.basicConfig(
 
 def read_awe(event_paths='winter_wind_drought/uk/most_extreme_events/duration/'):
     """Read in Adverse Weather Scenarios for Future Electricity Systems"""
-    # Data repository
-    data_loc_scenarios = '/badc/deposited2021/adverse_met_scenarios_electricity/data/'
     # here we select the most extreme duration winter wind drought events, but
     # other adverse events can be specified
-    fpath_scenarios = {s: data_loc_scenarios + event_paths + f'event{s}/' for s in [1,2,3]}
+    fpath_scenarios = {s: data_paths.awefes_data + event_paths + f'event{s}/' for s in [1,2,3]}
 
     # Read in temperature, windspeed of each event, store in dict
     dataset_scenarios = {s: xr.open_mfdataset(s_path+'*.nc') for s, s_path in fpath_scenarios.items()}
@@ -46,11 +46,9 @@ def read_awe(event_paths='winter_wind_drought/uk/most_extreme_events/duration/')
 
 def read_era5():
     """Read in ERA5 reanalysis weather data"""
-    # Data repository
-    fpath_reanalysis = '/gws/pw/j05/cop26_hackathons/oxford/Data/ERA5_data_EU_domain/field_set_1/'
-
     # Read in temperature, windspeed (and solar, ...)
-    dataset_reanalysis = xr.open_mfdataset(fpath_reanalysis+'ERA5_1hr_field_set_1_201*_*.nc')
+    dataset_reanalysis = xr.open_mfdataset(data_paths.ear5_field_set_1+
+                                           'ERA5_1hr_field_set_1_201*_*.nc')
     dataset_reanalysis['t2m'] -= 273.15 # conversion K to C
     dataset_reanalysis['wind_speed'] = np.sqrt(dataset_reanalysis.u100**2 + dataset_reanalysis.v100**2)
 
@@ -101,8 +99,8 @@ def apply_demand_model(dataset):
 def wind_conversion(dataset, mask):
     """Using windspeed data, calculate capacity factors and power"""
     # conversion data
-    fpath_turbines = 'windpower_resources/United_Kingdom_ERA5_windfarm_dist.nc'
-    fpath_power_curve = 'windpower_resources/Enercon_E70_2300MW_ECEM_turbine.csv'
+    fpath_turbines = data_paths.wind_resources + 'United_Kingdom_ERA5_windfarm_dist.nc'
+    fpath_power_curve = data_paths.wind_resources + 'Enercon_E70_2300MW_ECEM_turbine.csv'
     power_curve = pd.read_csv(fpath_power_curve, sep=' ', header=None,
                               names=['wind_speed', 'power', 'cf'])
 

@@ -30,11 +30,9 @@ logging.basicConfig(
 
 def read_awe_return(event):
     """Read in Adverse Weather Scenarios for Future Electricity Systems"""
-    # Data repository
-    data_loc_scenarios = '/badc/deposited2021/adverse_met_scenarios_electricity/data/'
     # here we select the most extreme duration winter wind drought events, but
     # other adverse events can be specified
-    fpath_scenarios = {s: data_loc_scenarios + 'winter_wind_drought/uk/' +
+    fpath_scenarios = {s: data_paths.awefes_data + 'winter_wind_drought/uk/' +
         f'return_period_1_in_{s}_years/duration/gwl12-4degC/'
         for s in [2, 5, 10, 20, 50, 100]}
 

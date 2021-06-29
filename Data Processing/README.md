@@ -4,7 +4,7 @@ The Met Office have produced a dataset of 'Adverse Weather Scenarios for Future
 Electricity Systems'. This lets us explore and anticipate the challenges energy
 systems may face under a warmer future climate.
 
-THis code was put together quickly during the Energy-Climate Hackathon 21-25
+This code was put together quickly during the Energy-Climate Hackathon 21-25
 June 2021. It is not guaranteed to work as expected, and filepaths will need to
 be altered to match data location on your system. Planned update in future to
 improve portability, readability, reliability of this work, and to expand on
@@ -32,7 +32,14 @@ example, the winter wind drought long duration events.
 
 ### Data
 Files in this directory assume working on the [jasmin](http://jasmin.ac.uk/)
-server - filepaths must be adjusted accordingly to point to your data.
+server - filepaths in `data_paths.py` must be adjusted accordingly to point to
+your data.
+
+You can download the relevant data from CEDA archive, for example:
+
+```bash
+wget -e robots=off --mirror --no-parent -r https://dap.ceda.ac.uk/badc/deposited2021/adverse_met_scenarios_electricity/data/winter_wind_drought/uk/
+```
 
 Additional data corresponding to wind turbine power curves, demand model
 regress coefficients, etc. should be placed under `wind_resources`.
